@@ -44,6 +44,15 @@ class PilhaD{
         }
     }
 
+    void PilhaD::listar(){
+        Nodo *aux;
+        aux=topo;
+        while(aux !=nullptr){
+            cout<<aux->info<<endl;
+            aux=aux->prox;
+        }
+    }
+
 }
 int main(){
     PilhaD pilha;//instancia do objeto da classe pilha
