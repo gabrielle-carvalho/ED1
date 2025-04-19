@@ -3,45 +3,70 @@
 
 class Fila{
 
-  private: //lista de atributos em privado
-    int fim;
-    int v[MAX];
+private: //lista de atributos em privado
+  int fim; //indice d ultim element inserid
+  int v[MAX]; //vetr fix para armazenar a fila
 
-  public: //decaracao de metodos
-    Fila(){ //contrutor de mesmo nome da classe
-      fim = -1; //começa com -1 para que quando seja incrementado va pra 0
+public:
+    Fila() { //cntrutr
+        fim = -1; //cmeca vazia
     }
     
     void add(int n){
-        if(fim ==MAX-1){
+        if(filaCheia()){
             std::cout << "Fila cheia" << std::endl;
             return;
         }
         else{
-            ++fim;
-            v[fim] = n;
+            ++fim; // anda uma pscica n vetr
+            v[fim] = n; //adicina mais um element n fim        
         }
     }
     
-    //filaCheia()
+    bool filaCheia(){
+      return (fim==MAX-1);
+    }
+
+    bool filaVazia(){
+      return (fim == -1);
+    }
     
     int retirar(){
-      while(fim == -1){
+      if(filaVazia()){
        std::cout << "Fila vazia, não dá pra tirar" << std::endl;
-       return;
+       return -1;
       } 
-      n=v[0];
-      else{
-        for(int i = 1; i<=fim; i++){
-           v[i-1]=v[i];
-           fim--;
-        }
+      
+      int n=v[0];
+      for(int i = 1; i<=fim; i++){
+         v[i-1]=v[i];
       }
+      fim--;
+      return n;
+    }
+
+    void mostrar(){
+      if(filaVazia()){
+        std::cout<<"Fila vazia"<<std::endl; //endl é para pular linha: \n
+        return;
+      }
+      std::cout<<"Fila: ";
+      for(int i=0; i<=fim; i++){
+        std::cout<<v[i] << " ";
+      }
+      std::cout <<std::endl;
     }
     
 };
 
 int main(){
-      Pilha obj1;
-      
-    }
+    Fila obj1;
+    obj1.add(10);
+    obj1.add(20);
+    obj1.mostrar();
+    std::cout << "Retirado: " << obj1.retirar() << std::endl;
+    obj1.mostrar();
+    std::cout << "Retirado: " << obj1.retirar() << std::endl;
+    obj1.mostrar();
+    std::cout << "Retirado: " << obj1.retirar() << std::endl; // Teste com fila vazia
+}
