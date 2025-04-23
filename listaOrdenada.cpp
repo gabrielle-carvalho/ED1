@@ -31,13 +31,36 @@ void inserirOrdenado(int n){
 }
 
 void retirarElemento(int n){
-  if(atual->prox==nullptr)
-    ant->prox=nullptr;
-  else if (atual==inicio)
-    inicio=atual->prox;
-  else
-    ant->prox=atual->prox;
+  Nodo *ant, *atual;
+  if(inicio==nullptr){
+    cout<<"Lista vazia";
+    return
+  }
+  atual=inicio;
+  while((atual!=nullptr) && (atual->info != n){
+    ant=atual;
+    atual=atual->prox
+    if(atual==nullptr)
+      cout<<"Número nao encontrado";
+      return;
+    if (atual==inicio)
+      inicio=atual->prox;
+    else
+      ant->prox=atual->prox;
+    delete atual;
+    
+      
+  }
+  
+  // if(atual->prox==nullptr)
+  //   ant->prox=nullptr; //ver pq esse é desnecessario
+  // else if (atual==inicio)
+  //   inicio=atual->prox;
+  // else
+  //   ant->prox=atual->prox;
+  
 }
+
 
 int listarElementos(){
   
