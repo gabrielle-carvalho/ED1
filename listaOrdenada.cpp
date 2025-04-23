@@ -28,6 +28,17 @@ void inserirOrdenado(int n){
     ant->prox=novo;
     novo->prox=atual;
   }
-
 }
 
+void retirarElemento(int n){
+  if(atual->prox==nullptr)
+    ant->prox=nullptr;
+  else if (atual==inicio)
+    inicio=atual->prox;
+  else
+    ant->prox=atual->prox;
+}
+
+int listarElementos(){
+  
+}
