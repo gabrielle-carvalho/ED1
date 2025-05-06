@@ -14,7 +14,7 @@ private:
 public:
     PilhaD();
     void empilhar(int n);
-    int empilhar();
+    int desempilhar();
     void listar();
 };
 
