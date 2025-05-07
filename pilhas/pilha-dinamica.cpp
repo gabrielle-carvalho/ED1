@@ -1,5 +1,5 @@
 #include <iostream>
-// using namespace std; permite usar cout, cin, endl sem escrever std:: antes
+using namespace std; //permite usar cout, cin, endl sem escrever std:: antes
 
 struct Nodo { // definição da estrutura Nodo
     int info;      // valor armazenado no nó
@@ -26,7 +26,7 @@ PilhaD::PilhaD(){
         Nodo *novo=new Nodo();// Cria um novo nó dinamicamente
         novo->info=n;  // Atribui o valor ao nó //nao pode fazer isso(se topo esta nulo)!!
         if(topo == nullptr){
-            nodo->prox=nullptr; //primeiro elemento, o endereco de prox é null
+            novo->prox=nullptr; //primeiro elemento, o endereco de prox é null
         }
         else{
             novo->prox=topo; //indica o endereco do prox elemnto da fila
@@ -56,7 +56,6 @@ PilhaD::PilhaD(){
         }
     }
 
-}
 int main(){
     PilhaD pilha;//instancia do objeto da classe pilha
     pilha.empilhar(4);

@@ -1,7 +1,11 @@
+#include <iostream>
+using namespace std;
+
 struct Nodo{
   int info;
-  struct Nodo, *ant, *prox;
+  struct Nodo *ant, *prox;
 };
+
 Class ListaDupla{
   Nodo * inicio;
   ListaDupla(){
