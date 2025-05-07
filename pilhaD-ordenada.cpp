@@ -18,51 +18,45 @@ public:
     novo->prox=topo;
     topo=novo;
   }
+
   int desempilhar() {
-          if (topo != nullptr) {
-              Nodo* aux = topo;
-              topo = topo->prox;
-              int n = aux->info;
-              delete aux;
-              return n;
-          } else {
-              cout << "Pilha vazia" << endl;
-              return -1;
-          }
-      }
-  
-      bool vazia() {
-          return topo == nullptr;
-      }
-  
-      void listar() {
-          Nodo* aux = topo;
-          while (aux != nullptr) {
-              cout << aux->info << endl;
-              aux = aux->prox;
-          }
-      }
-
-      void ordenarCrescente() {
-        PilhaD aux; //ajudar a rdenar
-
-        while (!vazia()) {
-            int temp = desempilhar();
-
-            // Coloca os elementos maiores de volta na pilha original
-            while (!aux.vazia() && aux.topo->info > temp) {
-                empilhar(aux.desempilhar());
-            }
-
-            aux.empilhar(temp);
-        }
-
-        // Copia ordenada de volta pra pilha original
-        while (!aux.vazia()) {
-            empilhar(aux.desempilhar());
-        }
+    if (topo != nullptr) {
+        Nodo* aux = topo;
+        topo = topo->prox;
+        int n = aux->info;
+        delete aux;
+        return n;
+    } else {
+        cout << "Pilha vazia" << endl;
+        return -1;
+    }
     }
   
+  bool vazia() {
+      return topo == nullptr;
+  }
+  
+  void listar() {
+      Nodo* aux = topo;
+      while (aux != nullptr) {
+          cout << aux->info << endl;
+          aux = aux->prox;
+      }
+  }
+  
+  void ordenarCrescente() {
+    PilhaD aux; //ajudar a rdenar
+    while (!vazia()) {
+        int temp = desempilhar();
+        while (!aux.vazia() && aux.topo->info > temp) {        // Coloca os elementos maiores de volta na pilha original
+            empilhar(aux.desempilhar());
+        }
+        aux.empilhar(temp);
+    }
+    while (!aux.vazia()) {    // Copia ordenada de volta pra pilha original
+        empilhar(aux.desempilhar());
+    }
+  }
 };
 
 int main() {
