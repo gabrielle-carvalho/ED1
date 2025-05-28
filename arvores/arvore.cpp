@@ -89,5 +89,5 @@ void emOrdem(nodo *raiz){
 
 int main(){
     Arvore tree;
-    tree.raiz=inserir(tree.raiz, 10);
+    tree.raiz=inserir(tree.raiz, 10); // pesquisar porque é chamdo assim, passando tree.raiz
 }
