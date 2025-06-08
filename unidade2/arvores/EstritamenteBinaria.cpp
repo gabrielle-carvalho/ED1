@@ -7,7 +7,10 @@ struct nodo{
 class Arvore{
     public:
     nodo *raiz;
-    nodo *inserir(nodo *raiz, int n); // 
+    Arvore();
+    nodo *inserir(nodo *raiz, int n);
+    nodo* retirar(nodo *raiz, int n);
+    nodo* substituir(nodo *raiz, nodo *sucessor);
     void emOrdem(nodo *raiz); // esquerda | raiz | direita
 };
 
@@ -15,7 +18,7 @@ Arvore :: Arvore (){
     raiz=nullptr;
 }
 
-nodo *inserir(nodo *raiz, int n){
+nodo *Arvore::inserir(nodo *raiz, int n){
     if (raiz==nullptr){
         raiz=new nodo();
         if(raiz==nullptr) exit(1); //nao conseguiu criar a area e nao ha mais nada a fazer
@@ -32,19 +35,19 @@ nodo *inserir(nodo *raiz, int n){
     }
     else{
         std::cout<<"Número igual a algum que esta na lista. RETORNANDO"<<std::endl;
-        return;
+        return raiz;
     }
-    // return;
+    return raiz;
 }
 
-void emOrdem(nodo *raiz){
+void Arvore::emOrdem(nodo *raiz){
     if(raiz==nullptr) return;
     emOrdem(raiz->esq); // vai ate o ultimo elemento existente na esquerda e coloca na fila
     std::cout<< raiz->info <<std::endl; // qunado nao ha mais elementos a esquerda, comeca a printar
     emOrdem(raiz->dir); //chama os valores pela ireita ate o fim, recursividade dnv
 }
 
-bool EstritamenteBinaria(nodo *raiz){
+bool Arvore::EstritamenteBinaria(nodo *raiz){
     if(raiz==nullptr)
         return true; //na ultima vez se for nulo ele retorna true indicando que é estritamente binaria, garantindo que todos os elementos cumpram essa regra
     if((raiz->esq==nullptr&&raiz->dir==nullptr) || (raiz->esq!=nullptr&&raiz->dir!=nullptr))
@@ -53,14 +56,14 @@ bool EstritamenteBinaria(nodo *raiz){
         return false;
 }
 
-Nodo *retirar(Nodo *raiz, int n){
-    Nodo *aux;
+nodo* Arvore::retirar(nodo *raiz, int n){
+    nodo *aux;
     if(raiz==nullptr)
         return raiz;
     if(n>raiz->info)
         raiz->dir=retirar(raiz->dir, n);
     else if(n<raiz->info)
-        raiz->esq=retirar(raiz->dir, n);
+        raiz->esq=retirar(raiz->esq, n);
     else{
         if(raiz->esq==nullptr){
             aux=raiz;
@@ -78,10 +81,11 @@ Nodo *retirar(Nodo *raiz, int n){
             raiz->dir=substituir(raiz, raiz->dir); //pela direita pois é sucessor
         }
     }
+    return raiz;
 }
 
-Nodo *substituir(Nodo*raiz, Nodo *sucessor){
-    Nodo *aux;
+nodo *Arvore::substituir(nodo*raiz, nodo *sucessor){
+    nodo *aux;
     if(sucessor->esq!=nullptr)
         sucessor->esq=substituir(raiz, sucessor->esq); //ele começa a percorrer a esquerda ate o final pra encontrar o menor
     else{
@@ -92,10 +96,30 @@ Nodo *substituir(Nodo*raiz, Nodo *sucessor){
         return sucessor;
 
     }
+    return raiz;
 }
 
 
 int main(){
     Arvore tree;
-    tree.raiz=inserir(tree.raiz, 10); // pesquisar porque é chamdo assim, passando tree.raiz
+    tree.raiz=tree.inserir(tree.raiz, 10);
+    tree.raiz=tree.inserir(tree.raiz, 5);
+    tree.raiz=tree.inserir(tree.raiz, 15);
+    tree.raiz=tree.inserir(tree.raiz, 2);
+    tree.raiz=tree.inserir(tree.raiz, 7);
+// a árvore não é alterada por referência internamente, você precisa atualizar a raiz 
+// a inserção pode criar um novo nodo e devolver um novo ponteiro de raiz.
+    std::cout << "Em ordem:\n";
+    tree.emOrdem(tree.raiz);
+
+    std::cout << "\nRemovendo 5:\n";
+    tree.raiz=tree.retirar(tree.raiz, 5);
+    tree.emOrdem(tree.raiz);
+
+    if(EstritamenteBinaria(tree.raiz))
+        std::cout << "A árvore é estritamente binária\n";
+    else
+        std::cout << "A árvore NÃO é estritamente binária\n";
+
+    return 0;
 }
