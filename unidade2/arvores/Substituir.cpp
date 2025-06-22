@@ -21,7 +21,7 @@ public:
 
     void inserir(nodo *p) {
         no* novo = new no();
-        novo->ptr = p;
+        novo->ptr = p; //ptr aponta pra arvore
         novo->prox = nullptr;
 
         if (inicio == nullptr) { // qnd a fila ta vazia
@@ -40,8 +40,8 @@ public:
             return nullptr;
         }
 
-        no* temp = inicio; // guarda o primeiro nó
-        nodo *valor = temp->ptr; // pega o valor dele
+        no* temp = inicio; // guarda o primeiro nó da fila
+        nodo *valor = temp->ptr;  // pega o ponteiro para o nodo da árvore
 
         inicio = inicio->prox; // o segundo da fila vira o primeiro
       
@@ -133,13 +133,14 @@ nodo *Arvore::retirar(nodo *raiz, int n){
     }
     return raiz;
 }
+
 nodo *Arvore::substitui(nodo *raiz, nodo *sucessor){
     nodo *ret;
     if(sucessor->esq==nullptr){
         raiz->info=sucessor->info;
         ret=sucessor;
         sucessor=sucessor->dir;
-        free(ret);
+        delete(ret);
     }
     else{
         sucessor->esq=substitui(raiz, sucessor->esq);
@@ -147,7 +148,7 @@ nodo *Arvore::substitui(nodo *raiz, nodo *sucessor){
     return sucessor;
 }
 
-int altura(nodo *raiz){
+int Arvore::altura(nodo *raiz){
     if(raiz==nullptr)
         return -1;
     if(raiz->dir==nullptr && raiz->esq==nullptr)

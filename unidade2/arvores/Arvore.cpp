@@ -12,14 +12,11 @@ class Arvore{
     Arvore();
     nodo *inserir(nodo *raiz, int n); // 
     void emOrdem(nodo *raiz); // esquerda | raiz | direita
-    // faça POS ORDEM!
-    // faca PRE ORDEM!
     int buscar(nodo *raiz, int n);
     int contar(nodo *raiz);
     int contarFolha(nodo *raiz);
     void compararSubarvore(nodo *raiz);
     nodo* inserirInterativo(nodo *raiz, int n);
-
 };
 
 Arvore :: Arvore (){

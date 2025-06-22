@@ -10,8 +10,8 @@ class Arvore{
     nodo *raiz;
     nodo *inserir(nodo *raiz, int n); // 
     void emOrdem(nodo *raiz); // esquerda | raiz | direita
-    // faça POS ORDEM!
-    // faca PRE ORDEM!
+    void posOrdem(nodo *raiz);
+    void preOrdem(nodo *raiz);
 };
 
 Arvore :: Arvore (){
@@ -37,47 +37,7 @@ nodo *inserir(nodo *raiz, int n){
         std::cout<<"Número igual a algum que esta na lista. RETORNANDO"<<std::endl;
         return;
     }
-    // return;
-}
-
-void inserirInterativo(Nodo *raiz, int n){
-    Nodo *atual, *pai;
-    if(raiz == nullptr){
-        raiz=new nodo();
-        if(raiz==nullptr) exit(1); //nao conseguiu criar a area e nao ha mais nada a fazer
-        raiz->info=n;
-        raiz->esq=nullptr;
-        raiz->dir=nullptr;
-        return raiz;
-    }
-    atual=raiz;
-    while(atual!=nullptr){
-        pai=atual;
-        if(n>atual->info){
-            atual = atual->dir;
-        }
-        else if(n<atual->info){
-            atual = atual->esq;
-        }
-        else{
-            std::cout<<"Número igual a algum que esta na lista. RETORNANDO"<<std::endl;
-            return;
-        }
-        atual=new nodo();
-        if(!atual){
-            exit(1);
-        }
-        atual->info=n;
-        atual->esq=nullptr;
-        atual->dir=nullptr;
-        if(n>pai->info){
-            pai->dir=atual;
-        }
-        else{
-            pai->esq=atual;
-        }
-    }
-
+    return raiz;
 }
 
 void emOrdem(nodo *raiz){
@@ -87,7 +47,21 @@ void emOrdem(nodo *raiz){
     emOrdem(raiz->dir); //chama os valores pela ireita ate o fim, recursividade dnv
 }
 
+void posOrdem(nodo *raiz){
+    if(raiz==nullptr) return;
+    posOrdem(raiz->esq);
+    posOrdem(raiz->dir);
+    std::cout<< raiz->info <<std::endl;
+}
+
+void preOrdem(nodo *raiz){
+    if(raiz==nullptr) return;
+    std::cout<< raiz->info <<std::endl; 
+    preOrdem(raiz->esq); 
+    preOrdem(raiz->dir); 
+}
+
 int main(){
     Arvore tree;
-    tree.raiz=inserir(tree.raiz, 10); // pesquisar porque é chamdo assim, passando tree.raiz
+    tree.raiz=inserir(tree.raiz, 10); 
 }

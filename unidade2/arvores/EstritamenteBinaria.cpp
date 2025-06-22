@@ -11,6 +11,7 @@ class Arvore{
     nodo *inserir(nodo *raiz, int n);
     nodo* retirar(nodo *raiz, int n);
     nodo* substituir(nodo *raiz, nodo *sucessor);
+    bool EstritamenteBinaria(nodo *raiz);
     void emOrdem(nodo *raiz); // esquerda | raiz | direita
 };
 
@@ -99,7 +100,6 @@ nodo *Arvore::substituir(nodo*raiz, nodo *sucessor){
     return raiz;
 }
 
-
 int main(){
     Arvore tree;
     tree.raiz=tree.inserir(tree.raiz, 10);
@@ -116,7 +116,7 @@ int main(){
     tree.raiz=tree.retirar(tree.raiz, 5);
     tree.emOrdem(tree.raiz);
 
-    if(EstritamenteBinaria(tree.raiz))
+    if(tree.EstritamenteBinaria(tree.raiz))
         std::cout << "A árvore é estritamente binária\n";
     else
         std::cout << "A árvore NÃO é estritamente binária\n";
