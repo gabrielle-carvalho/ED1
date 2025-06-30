@@ -45,46 +45,6 @@ nodo* Arvore::inserir(nodo *raiz, int n){
     return raiz;
 }
 
-// nodo* Arvore::inserirInterativo(nodo *raiz, int n){
-//     nodo *atual, *pai;
-//     if(raiz == nullptr){
-//         raiz=new nodo();
-//         if(raiz==nullptr) exit(1); //nao conseguiu criar a area e nao ha mais nada a fazer
-//         raiz->info=n;
-//         raiz->esq=nullptr;
-//         raiz->dir=nullptr;
-//         return raiz;
-//     }
-//     atual=raiz;
-//     while(atual!=nullptr){
-//         pai=atual;
-//         if(n>atual->info){
-//             atual = atual->dir;
-//         }
-//         else if(n<atual->info){
-//             atual = atual->esq;
-//         }
-//         else{
-//             std::cout<<"Número igual a algum que esta na lista. RETORNANDO"<<std::endl;
-//             return;
-//         }
-//         atual=new nodo();
-//         if(!atual){
-//             exit(1);
-//         }
-//         atual->info=n;
-//         atual->esq=nullptr;
-//         atual->dir=nullptr;
-//         if(n>pai->info){
-//             pai->dir=atual;
-//         }
-//         else{
-//             pai->esq=atual;
-//         }
-//     }
-//     return raiz;
-// }
-
 void Arvore::emOrdem(nodo *raiz){
     if(raiz==nullptr) return;
     emOrdem(raiz->esq); // vai ate o ultimo elemento existente na esquerda e coloca na fila
