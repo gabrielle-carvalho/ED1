@@ -45,12 +45,11 @@ int Stack::desempilhar() {
         no *aux = topo;
         topo=topo->prox;
         int n = aux->info;
+        delete aux;
         return n;
     }
-    else{
-        std::cout<<"Pilha vazia"<<std::endl;
-        return -1;
-    }
+    std::cout<<"Pilha vazia"<<std::endl;
+    return -1;
 }
 
 
@@ -60,7 +59,7 @@ class Arvore{
     Arvore();
     nodo *inserir(nodo *raiz, int n);
     bool imprimirAsc(nodo *raiz, int alvo);
-    void empilharAscendentes(nodo *raiz, int alvo, Stack &pilha);
+    bool empilharAscendentes(nodo *raiz, int alvo, Stack &pilha);
 };
 
 Arvore :: Arvore (){
@@ -89,19 +88,22 @@ nodo *Arvore::inserir(nodo *raiz, int n){
     return raiz;
 }
 
-void Arvore::empilharAscendentes(nodo *raiz, int alvo, Stack &pilha) {
+bool Arvore::empilharAscendentes(nodo *raiz, int alvo, Stack &pilha) {
     if(raiz==nullptr) 
-        return; 
+        return 0;
     if (raiz->info == alvo)
-        return;
+        return 1;
     if(alvo<raiz->info){
-        pilha.empilhar(raiz->info);
         empilharAscendentes(raiz->esq, alvo, pilha);
+        pilha.empilhar(raiz->info);
+        return 1;
     }
     else if(alvo>raiz->info){
-        pilha.empilhar(raiz->info);
         empilharAscendentes(raiz->dir, alvo, pilha);
+        pilha.empilhar(raiz->info);
+        return 1;
     }
+    return 0;
 }
 
 int main() {

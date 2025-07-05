@@ -6,7 +6,6 @@
 
 #include <iostream>
 
-
 struct no {
     int codigo;
     float media;
@@ -42,6 +41,10 @@ Arvore::Arvore() {
     raiz = nullptr;
 }
 
+PilhaD::PilhaD(){
+    topo=nullptr;
+}
+
 no *Arvore::inserir(no *raiz, int cod, float med){
     if(raiz==nullptr){
         raiz=new no();
@@ -66,45 +69,28 @@ no *Arvore::inserir(no *raiz, int cod, float med){
 }
 
 
-// void retirarFolhas(no *&raiz, PilhaD &P) {
-//     if (raiz == nullptr) return;
-
-//     retirarFolhas(raiz->dir, P);
-//     retirarFolhas(raiz->esq, P);
-    
-//     if (raiz->esq == nullptr && raiz->dir == nullptr) {
-//         std::cout << "Removendo folha: " << raiz->codigo << std::endl;
-//         P.empilhar(raiz->codigo);
-//         delete raiz;
-//         raiz = nullptr;
-//     }
-// }
+void retirarEempilharFolhas(no *&raiz, PilhaD &P) {
+    if (raiz == nullptr) return;
 
 
-void empilharFolhas (no *raiz, PilhaD &P){
-    if(raiz==nullptr){
-        return;
-    }
-    empilharFolhas(raiz->esq, P);
-    empilharFolhas(raiz->dir, P);
-
-    if(raiz->dir==nullptr&&raiz->esq==nullptr){
-        std::cout << "Empilhando folha: " << raiz->codigo << std::endl;
+    if (raiz->esq == nullptr && raiz->dir == nullptr) {
+        std::cout << "Empilhando e removendo folha: " << raiz->codigo << std::endl;
         P.empilhar(raiz->codigo);
+        delete raiz;
+        raiz = nullptr;
         return;
     }
+
+    retirarEempilharFolhas(raiz->esq, P);
+    retirarEempilharFolhas(raiz->dir, P);
+
 }
 
 void Arvore::pilhaFolhas(){
     PilhaD P;
-    empilharFolhas(raiz, P);
+    retirarEempilharFolhas(raiz, P);
+    std::cout << "Pilha com as folhas: ";
     P.listar();
-}
-
-
-
-PilhaD::PilhaD(){
-    topo=nullptr; // inicializa o topo da pilha como nulo
 }
 
 void PilhaD::empilhar(int n){ // empilha um valor na pilha

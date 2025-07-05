@@ -5,18 +5,6 @@ struct nodo {
     nodo *esq, *dir;
 };
 
-class Arvore {
-public:
-    nodo *raiz;
-    Arvore();
-    nodo *inserir(nodo *raiz, int n);
-    nodo *retirar(nodo *raiz, int n);
-    nodo substituir(nodo *raiz, nodo *sucessor);
-    void em_ordem(nodo *raiz);
-    nodo *listaNodos();
-
-};
-
 struct No {
     int info;
     No *ant, *prox;
@@ -93,14 +81,39 @@ public:
             return -1;
         }
     }
+
+
+    void exibirLista() {
+        No *aux = inicio;
+        std::cout << "Lista: ";
+        while (aux != nullptr) {
+            std::cout << aux->info << " ";
+            aux = aux->prox;
+        }
+        std::cout << std::endl;
+    }
 };
 
-void menu(ListaDupla &lista) {
+class Arvore {
+public:
+    nodo *raiz;
+    Arvore();
+    nodo *inserir(nodo *raiz, int n);
+    nodo *retirar(nodo *raiz, int n);
+    nodo *substituir(nodo *raiz, nodo *sucessor);
+    void em_ordem(nodo *raiz);
+    void listaNodos(ListaDupla &lista);
+
+};
+
+void menu(ListaDupla &lista, Arvore &arv) {
     char opcao;
     while (true) {
         std::cout << "\nPalavra atual: " << lista.getAtual() << "\n";
         std::cout << "D: Inserir (depois da palavra atual)\n";
         std::cout << "S: Eliminar palavra atual\n";
+        std::cout << "L: Carregar elementos da árvore para a lista\n";
+        std::cout << "V: Visualizar lista\n";
         std::cout << "X: Sair\n";
         std::cout << "Digite sua opção: ";
         std::cin >> opcao;
@@ -108,13 +121,22 @@ void menu(ListaDupla &lista) {
         switch (opcao) {
         case 'd': case 'D': {
             int word;
-            std::cout << "Insira a palavra que você quer inserir após a atual: ";
+            std::cout << "Insira o número que deseja inserir após a atual: ";
             std::cin >> word;
             lista.inserir(word);
             break;
         }
         case 's': case 'S': {
             lista.retirarAtual();
+            break;
+        }
+        case 'l': case 'L': {
+            arv.listaNodos(lista);
+            std::cout << "Elementos da árvore foram carregados para a lista.\n";
+            break;
+        }
+        case 'v': case 'V': {
+            lista.exibirLista();
             break;
         }
         case 'x': case 'X': {
@@ -128,6 +150,7 @@ void menu(ListaDupla &lista) {
     }
 }
 
+
 Arvore::Arvore() {
     raiz = nullptr;
 }
@@ -140,10 +163,10 @@ nodo *Arvore::inserir(nodo *raiz, int n){
         raiz->dir=nullptr;
         return raiz;
     }
-    if(n<raiz->info){
+    if(n>raiz->info){
         raiz->dir = inserir(raiz->dir,n);
     }
-    else if(n>raiz->info){
+    else if(n<raiz->info){
         raiz->esq = inserir(raiz->esq, n);
     }
     else{
@@ -161,9 +184,9 @@ nodo *Arvore::substituir(nodo *raiz, nodo *sucessor){
     else{
         raiz->info = sucessor->info;
         aux = sucessor;
-        sucessor = sucessor->dir;
+        nodo* temp = sucessor->dir;
         delete aux;
-        return sucessor;
+        return temp;
     }
     return raiz;
 }
@@ -173,7 +196,7 @@ void Arvore::em_ordem(nodo *raiz){
         return;
     }
     em_ordem(raiz->esq);
-    std::coour<< raiz->info <<std::endl;
+    std::cout<< raiz->info <<std::endl;
     em_ordem(raiz->dir);
 }
 
@@ -208,6 +231,32 @@ nodo *Arvore::retirar(nodo *raiz, int n){
     return raiz;
 }
 
-Arvore::listaNodos(){
+void inserirEmLista(nodo *raiz, ListaDupla &lista){
+    if(raiz==nullptr){
+        return;
+    }
+    inserirEmLista(raiz->esq, lista);
+    lista.inserir(raiz->info);
+    inserirEmLista(raiz->dir, lista);
+}
 
+
+
+void Arvore::listaNodos(ListaDupla &lista){
+    inserirEmLista(raiz, lista);
+}
+
+int main() {
+    ListaDupla lista;
+    Arvore arv;
+    arv.raiz = arv.inserir(arv.raiz, 15);
+    arv.raiz = arv.inserir(arv.raiz, 10);
+    arv.raiz = arv.inserir(arv.raiz, 20);
+    arv.raiz = arv.inserir(arv.raiz, 8);
+    arv.raiz = arv.inserir(arv.raiz, 12);
+
+    // arv.listaNodos(lista);  
+
+    menu(lista, arv);  
+    return 0;
 }

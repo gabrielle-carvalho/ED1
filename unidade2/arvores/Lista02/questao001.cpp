@@ -11,6 +11,7 @@ class Arvore{
     nodo *inserir(nodo *raiz, int n);
     nodo* retirar(nodo *raiz, int n);
     void emOrdem(nodo *raiz);
+    nodo *substituir(nodo*raiz, nodo *sucessor);
     nodo *extremoDireita(nodo *raiz);
     nodo *extremoEsquerda(nodo *raiz);
 };
@@ -76,12 +77,28 @@ nodo* Arvore::retirar(nodo *raiz, int n){
     return raiz;
 }
 
+nodo *Arvore::substituir(nodo*raiz, nodo *sucessor){
+    nodo *aux;
+    if(sucessor->esq!=nullptr)
+        sucessor->esq=substituir(raiz, sucessor->esq); //ele começa a percorrer a esquerda ate o final pra encontrar o menor
+    else{
+        raiz->info=sucessor->info;
+        aux=sucessor;
+        sucessor=sucessor->dir;
+        delete aux;
+        return sucessor;
+
+    }
+    return raiz;
+}
+
+
 nodo *Arvore::extremoDireita(nodo *raiz){
     if(raiz==nullptr)
-        return;
-    if(raiz->esq!=nullptr&&raiz->dir!=nullptr)
+        return nullptr;
+    if(raiz->esq==nullptr&&raiz->dir==nullptr)
         return raiz;
-    if(raiz->esq)
+    if(raiz->esq !=nullptr)
         return extremoDireita(raiz->esq);
     else
         return extremoDireita(raiz->dir);
@@ -89,10 +106,10 @@ nodo *Arvore::extremoDireita(nodo *raiz){
 
 nodo *Arvore::extremoEsquerda(nodo *raiz){
     if(raiz==nullptr)
-        return;
-    if(raiz->esq!=nullptr&&raiz->dir!=nullptr)
+        return nullptr;
+    if(raiz->esq==nullptr&&raiz->dir==nullptr)
         return raiz;
-    if(raiz->esq)
+    if(raiz->esq!=nullptr)
         return extremoEsquerda(raiz->esq);
     else
         return extremoEsquerda(raiz->dir);

@@ -1,6 +1,5 @@
-// Faça uma função em C que receba como parâmetro o ponteiro para a raiz de uma árvore
-// binária de pesquisa já criada. A função deverá igualar o número de folhas das sub-
-// árvores da raiz principal.
+// mplemente uma função em C++ que, dada a raiz de uma árvore binária de pesquisa, modifique a árvore de forma
+//  que ambas as subárvores da raiz principal tenham mesma altura. Para isso, insira nós com valor -1 nas posições necessárias.
 
 #include<iostream>
 #include<string>
@@ -18,11 +17,10 @@ public:
     nodo *remover(nodo *raiz, int n);
     void em_ordem(nodo *raiz);
     nodo *substituir(nodo *raiz, nodo* sucessor);
-    int contarFolhas(nodo *raiz);
-    std::pair<std::string, int>  qtdLadoFolhas(nodo *raiz);
+    int altura(nodo *raiz);
+    void igualarAlt(nodo *raiz);
     void mostrarFolhas(nodo *raiz);
-    nodo *removerFolha(nodo *raiz);
-    void igualarFolhas();
+    nodo *addFolha(nodo *raiz, int atual, int alvo);
 
 };
 
@@ -106,72 +104,58 @@ void Arvore::em_ordem(nodo *raiz){
     em_ordem(raiz->dir);
 }
 
-int Arvore::contarFolhas(nodo *raiz){
+int Arvore::altura(nodo *raiz){
     if(raiz==nullptr){
-        return 0;
-    }
-    if(raiz->esq==nullptr&&raiz->dir==nullptr){
-        return 1;
-    }
-    return contarFolhas(raiz->esq) + contarFolhas(raiz->dir);
-}
-
-std::pair<std::string, int> Arvore::qtdLadoFolhas(nodo *raiz){
-    if(raiz==nullptr){
-        return {"nenhum", 0}; 
-        
-    }
-    int e = contarFolhas(raiz->esq);
-    int d = contarFolhas(raiz->dir);
-
-    if(e>d){
-        return {"esquerda", e}; 
-    }
-    else if(e<d){
-        return {"direita", d}; 
+        return -1;
     }
     else{
-        return {"igual", e};
+        int e = altura(raiz->esq);
+        int d = altura(raiz->dir);
+        if(e>d){
+            return e+1;
+        }
+        else{
+            return d+1;
+        }
     }
-
 }
 
-nodo *Arvore::removerFolha(nodo *raiz){
-    if(raiz==nullptr) 
-        return nullptr;
-    if(raiz->esq==nullptr&&raiz->dir==nullptr){
-        delete raiz;
-        return nullptr;
+nodo *Arvore::addFolha(nodo *raiz, int atual, int alvo){
+    if(atual==alvo){
+        return raiz;
     }
-    if(raiz->esq!=nullptr){
-        raiz->esq = removerFolha(raiz->esq);
+    if(raiz==nullptr){
+        raiz =new nodo();
+        raiz->info = -1;
+        raiz->esq=nullptr;
+        raiz->dir=nullptr;
     }
-    else if(raiz->dir!=nullptr){
-        raiz->dir =  removerFolha(raiz->dir);
-    }
+
+    raiz->esq = addFolha(raiz->esq, atual + 1, alvo);
+    raiz->dir = addFolha(raiz->dir, atual + 1, alvo);
+
     return raiz;
 }
 
-void Arvore::igualarFolhas(){
+void Arvore::igualarAlt(nodo *raiz){
     if(raiz==nullptr){
         return;
     }
-    int qtdE = contarFolhas(raiz->esq);
-    int qtdD = contarFolhas(raiz->dir);
+    int altE = altura(raiz->esq);
+    int altD = altura(raiz->dir);
 
-    while (qtdE!=qtdD) {
-        if(qtdE>qtdD){
-            raiz->esq = removerFolha(raiz->esq);
-        }
-        else{
-            raiz->dir = removerFolha(raiz->dir);
-        }
-
-        qtdD=contarFolhas(raiz->dir);
-        qtdE=contarFolhas(raiz->esq);
+    if(altE>altD){
+        raiz->dir = addFolha(raiz->dir, 1, altE);
     }
-    std::cout << "\nFolhas igualadas: esquerda = " << qtdE << ", direita = " << qtdD << "\n";    
+    else if(altE<altD){
+        raiz->esq = addFolha(raiz->esq, 1, altD);
+    }
+    else{
+        std::cout<<"Alturas já igualadas";
+    }
 }
+
+
 
 void Arvore::mostrarFolhas(nodo *raiz) {
     if (raiz == nullptr) return;
@@ -181,7 +165,6 @@ void Arvore::mostrarFolhas(nodo *raiz) {
     mostrarFolhas(raiz->esq);
     mostrarFolhas(raiz->dir);
 }
-
 
 int main(){
     Arvore a;
@@ -195,23 +178,26 @@ int main(){
     a.raiz = a.inserir(a.raiz, 25);
     a.raiz = a.inserir(a.raiz, 505);
     a.raiz = a.inserir(a.raiz, 16);
-    a.raiz = a.inserir(a.raiz, 2000);
-    a.raiz = a.inserir(a.raiz, 250000);
-    a.raiz = a.inserir(a.raiz, 270000);
 
     std::cout << "Folhas da subárvore esquerda: ";
     a.mostrarFolhas(a.raiz->esq);
     std::cout << "\nFolhas da subárvore direita: ";
     a.mostrarFolhas(a.raiz->dir);
 
-    a.igualarFolhas();
 
-    std::cout << "\nApós igualar:\n";
+
+    a.igualarAlt(a.raiz);
+
+    std::cout << "\n\nApós igualar alturas:\n";
+    std::cout << "Altura esquerda: " << a.altura(a.raiz->esq) << std::endl;
+    std::cout << "Altura direita: " << a.altura(a.raiz->dir) << std::endl;
+
+
     std::cout << "Folhas da subárvore esquerda: ";
     a.mostrarFolhas(a.raiz->esq);
     std::cout << "\nFolhas da subárvore direita: ";
     a.mostrarFolhas(a.raiz->dir);
-    std::cout << std::endl;
+
 
     return 0;
 }
