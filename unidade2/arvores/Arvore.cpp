@@ -16,7 +16,6 @@ class Arvore{
     int contar(nodo *raiz);
     int contarFolha(nodo *raiz);
     void compararSubarvore(nodo *raiz);
-    nodo* inserirInterativo(nodo *raiz, int n);
 };
 
 Arvore :: Arvore (){

@@ -94,14 +94,16 @@ bool Arvore::empilharAscendentes(nodo *raiz, int alvo, Stack &pilha) {
     if (raiz->info == alvo)
         return 1;
     if(alvo<raiz->info){
-        empilharAscendentes(raiz->esq, alvo, pilha);
-        pilha.empilhar(raiz->info);
-        return 1;
+        if(empilharAscendentes(raiz->esq, alvo, pilha)){
+            pilha.empilhar(raiz->info);
+            return 1;
+        }
     }
     else if(alvo>raiz->info){
-        empilharAscendentes(raiz->dir, alvo, pilha);
-        pilha.empilhar(raiz->info);
-        return 1;
+        if(empilharAscendentes(raiz->dir, alvo, pilha)){
+            pilha.empilhar(raiz->info);
+            return 1;
+        }
     }
     return 0;
 }

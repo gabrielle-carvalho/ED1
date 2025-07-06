@@ -1,6 +1,5 @@
 // Escreva uma função, em C, para imprimir a(s) folha(s) de maior nível, e a(s) folha(s) de menor 
 // nível, com os seus respectivos níveis, de uma árvore binária.
-
 #include<iostream>
 
 struct nodo {
@@ -50,7 +49,11 @@ int Arvore::encontrarMinNivel(nodo *raiz, int nivel){
         return nivel;
     int esq = encontrarMinNivel(raiz->esq, nivel + 1);
     int dir = encontrarMinNivel(raiz->dir, nivel + 1);
-    return std::min(esq, dir);
+    if (esq < dir)
+        return esq;
+    else
+        return dir;
+
 }
 
 int Arvore::encontrarMaxNivel(nodo *raiz, int nivel){
@@ -60,17 +63,20 @@ int Arvore::encontrarMaxNivel(nodo *raiz, int nivel){
         return nivel;
     int esq = encontrarMaxNivel(raiz->esq, nivel + 1);
     int dir = encontrarMaxNivel(raiz->dir, nivel + 1);
-    return std::max(esq, dir);
+    if (esq > dir)
+        return esq;
+    else
+        return dir;
+
 }
 
 void Arvore::imprimirFolhas(nodo *raiz, int nivel, int alvoMin, int alvoMax){
     if (raiz == nullptr)
         return;
     if (raiz->esq == nullptr && raiz->dir == nullptr){
-        if (nivel == alvoMin)
+        if (nivel == alvoMin || nivel == alvoMax)
             std::cout << raiz->info << "\n";
-        else if (nivel == alvoMax)
-            std::cout << raiz->info << "\n";
+        return;
     }
     imprimirFolhas(raiz->esq, nivel + 1, alvoMin, alvoMax);
     imprimirFolhas(raiz->dir, nivel + 1, alvoMin, alvoMax);

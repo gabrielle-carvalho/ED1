@@ -1,4 +1,3 @@
-
 // Faça uma função em C++ que receba como parâmetro o ponteiro para a raiz de uma árvore
 // binária de pesquisa já criada. A função deverá indicar qual das sub-árvor
 
@@ -89,6 +88,7 @@ nodo *Arvore::substituir(nodo *raiz, nodo *sucessor){
     else{
         raiz->info = sucessor->info;
         aux=sucessor;
+        sucessor=sucessor->dir;
         delete aux;
         return sucessor;
     }

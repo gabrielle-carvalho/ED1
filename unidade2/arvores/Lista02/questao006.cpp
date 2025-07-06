@@ -3,7 +3,6 @@
 // média no curso. Escreva uma função, em C, para retirar as folhas da árvore e gerar uma pilha 
 // contendo  apenas  as  folhas  (sem  alocar  nenhum  novo  endereço),  de  tal  forma  que no  topo  da 
 // pilha encontraremos sempre o maior código do aluno.
-
 #include <iostream>
 
 struct no {
@@ -68,10 +67,8 @@ no *Arvore::inserir(no *raiz, int cod, float med){
     return raiz;
 }
 
-
 void retirarEempilharFolhas(no *&raiz, PilhaD &P) {
     if (raiz == nullptr) return;
-
 
     if (raiz->esq == nullptr && raiz->dir == nullptr) {
         std::cout << "Empilhando e removendo folha: " << raiz->codigo << std::endl;
@@ -80,10 +77,8 @@ void retirarEempilharFolhas(no *&raiz, PilhaD &P) {
         raiz = nullptr;
         return;
     }
-
     retirarEempilharFolhas(raiz->esq, P);
     retirarEempilharFolhas(raiz->dir, P);
-
 }
 
 void Arvore::pilhaFolhas(){
@@ -130,4 +125,3 @@ int main() {
 
     return 0;
 }
-

@@ -98,10 +98,9 @@ nodo *Arvore::extremoDireita(nodo *raiz){
         return nullptr;
     if(raiz->esq==nullptr&&raiz->dir==nullptr)
         return raiz;
-    if(raiz->esq !=nullptr)
-        return extremoDireita(raiz->esq);
-    else
+    if(raiz->dir !=nullptr)
         return extremoDireita(raiz->dir);
+    return extremoDireita(raiz->esq);
 }
 
 nodo *Arvore::extremoEsquerda(nodo *raiz){
@@ -111,8 +110,7 @@ nodo *Arvore::extremoEsquerda(nodo *raiz){
         return raiz;
     if(raiz->esq!=nullptr)
         return extremoEsquerda(raiz->esq);
-    else
-        return extremoEsquerda(raiz->dir);
+    return extremoEsquerda(raiz->dir);
 }
 
 int main(){

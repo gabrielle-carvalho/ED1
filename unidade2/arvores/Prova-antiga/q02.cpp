@@ -91,6 +91,7 @@ nodo *Arvore::substituir(nodo *raiz, nodo *sucessor){
     else{
         raiz->info = sucessor->info;
         aux=sucessor;
+        sucessor=sucessor->dir;
         delete aux;
         return sucessor;
     }
@@ -146,7 +147,7 @@ nodo *Arvore::removerFolha(nodo *raiz){
     if(raiz->esq!=nullptr){
         raiz->esq = removerFolha(raiz->esq);
     }
-    else if(raiz->dir!=nullptr){
+    if(raiz->dir!=nullptr){
         raiz->dir =  removerFolha(raiz->dir);
     }
     return raiz;
@@ -181,7 +182,6 @@ void Arvore::mostrarFolhas(nodo *raiz) {
     mostrarFolhas(raiz->esq);
     mostrarFolhas(raiz->dir);
 }
-
 
 int main(){
     Arvore a;

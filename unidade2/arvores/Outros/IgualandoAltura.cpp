@@ -89,6 +89,7 @@ nodo *Arvore::substituir(nodo *raiz, nodo *sucessor){
     else{
         raiz->info = sucessor->info;
         aux=sucessor;
+        sucessor=sucessor->dir;
         delete aux;
         return sucessor;
     }

@@ -240,8 +240,6 @@ void inserirEmLista(nodo *raiz, ListaDupla &lista){
     inserirEmLista(raiz->dir, lista);
 }
 
-
-
 void Arvore::listaNodos(ListaDupla &lista){
     inserirEmLista(raiz, lista);
 }
